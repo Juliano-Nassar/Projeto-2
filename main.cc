@@ -5,6 +5,7 @@
 #include "color.h"
 #include "hittable_list.h"
 #include "sphere.h"
+#include "helicoid.h"
 
 #include <iostream>
 #include "material.h"
@@ -48,11 +49,19 @@ int main() {
     auto material_right  = make_shared<metal>(color(0.8, 0.6, 0.2), 0.0);
 
     world.add(make_shared<sphere>(point3( 0.0, -100.5, -1.0), 100.0, material_ground));
-    world.add(make_shared<sphere>(point3( 0.0,    0.0, -1.0),   0.5, material_center));
-    world.add(make_shared<sphere>(point3(-1.0,    0.0, -1.0),   0.5, material_left));
-    world.add(make_shared<sphere>(point3(-1.0,    0.0, -1.0), -0.45, material_left));
-    world.add(make_shared<sphere>(point3( 1.0,    0.0, -1.0),   0.5, material_right));
+    //world.add(make_shared<sphere>(point3( 0.0,    0.0, -1.0),   0.5, material_center));
+    //world.add(make_shared<sphere>(point3(-1.0,    0.0, -1.0),   0.5, material_left));
+    //world.add(make_shared<sphere>(point3(-1.0,    0.0, -1.0), -0.45, material_left));
+    //world.add(make_shared<sphere>(point3( 1.0,    0.0, -1.0),   0.5, material_right));
 
+    // helicoid (origin, inner radius, outter radius, number of revolutions, height step by revolution, resolution (in radians))
+    // origin - > Bottom helicoid point
+    // inner radius -> intern radius (It can ben zero or greater)
+    // outter radius -> outside radius (It needs to be greater than zero)
+    // number of revolutions -> number of revolutions that the helicoid will make
+    // height step by revolution -> height between each revolution
+    // resolution -> angle in radians step to create helicoid triangles (Lower increase the number of trianges)
+    world.add(make_shared<helicoid>(point3( -0.5,    0.0, -0.7),   0.1, 0.7,  3.0, 0.1, 2*pi/8, material_center));
     // Camera
 
     point3 lookfrom(3,3,2);
